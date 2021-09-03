@@ -7,7 +7,7 @@ pedir a usuario que ingrese numero con X, sino será el nro indep. y finaliza.
 por lo tanto, el ult. elemento del array siempre será el independiente.
 grado más grande: array size - 1.
 "
-| pedir polN salir arrCopy indexTemp numTemp opTemp polA polB array suma coefA coefB sumaActual sumaArray temp |
+| pedir polN salir arrCopy indexTemp numTemp opTemp polA polB array suma sumaFun mulFun coefA coefB sumaActual sumaArray temp producto tempMulA tempMulB |
 
 pedir := [ :nombrePol | 
 	polN := OrderedCollection new.
@@ -64,17 +64,29 @@ ifFalse: [
 ].
 
 " SUMA DE POLINOMIOS "
-suma := [
+sumaFun := [ :arrA :arrB |
 	sumaArray := Array new: array size.
 	1 to: (array size) do: [ :i | 
-		coefA := polA at: i.
-		coefB := polB at: i.
+		coefA := arrA at: i.
+		coefB := arrB at: i.
 		sumaActual := coefA + coefB.
 		sumaArray at: i put: sumaActual.
 	].
 	sumaArray.
 ].
-suma := suma value.
+suma := sumaFun value: polA value:polB.
+
+" MULTIPLICACION DE POLINOMIOS "
+mulFun := [ :arrA :arrB |
+	tempMulA := Array new: (arrA size) withAll: 0.
+	tempMulB := Array new: (arrA size) withAll: 0.
+	indexTemp := (arrB size).
+	1 to: (arrB size) do: [ :i | 
+		arrB at: i.
+		indexTemp := indexTemp + 1.
+	].
+].
+producto := mulFun value: polA value: polB.
 
 "Mostrar por pantalla resultados"
 Transcript clear.
@@ -95,5 +107,7 @@ temp := suma size - 1. "grado"
 	temp := temp - 1.
 	
 ].
+Transcript cr.
+Transcript show: ('Multiplicación: {1}' format: { producto }).
 Transcript cr.
 Transcript show: ('{1} - {2}' format:{ polA. polB. }).

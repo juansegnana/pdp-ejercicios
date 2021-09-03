@@ -1,16 +1,23 @@
 "ej 4."
-| a b c res1 res2 |
-a := 2. "cuadratico"
-b := 6. "lineal"
-c := 3. "independiente" 
+| a b c discriminante res1 res2 |
+a := 3. "cuadratico"
+b := 8. "lineal"
+c := 2. "independiente" 
 
 (a == 0) ifTrue: [ ^'a debe ser diferente de 0' ].
 
 "-b +- ( raiz de (b^2) - (4*a*c) )"
 "dividido 2*a"
-b negated.
-res1 := (b negated) + ( (b**2) - (4*a*c) ) sqrt / (2*a).
-res2 := (b negated) - ( (b**2) - (4*a*c) ) sqrt / (2*a).
+discriminante := (b**2) - (4*a*c).
+(discriminante < 0) 
+	ifTrue: [ 
+		discriminante:= ( ( discriminante * (-1) ) sqrt ) * (-1).
+	]
+	ifFalse: [ 
+		discriminante:= (discriminante) sqrt.
+	].
+res1 := (b negated) + discriminante / (2*a).
+res2 := (b negated) - discriminante / (2*a).
 
 " Redondear "
 res1:= res1 roundTo: 0.01.

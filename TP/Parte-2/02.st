@@ -1,4 +1,5 @@
-| f g cont cociente res1 res2 copy | " ej. 2 "
+" ej. 2 "
+| f g cont cociente res1 res2 copy |
 f:= 90. "dividendo | multiplicando"
 g:= 2. "divisor | multiplicador"
 (g == 0) ifTrue: [ ^ 'error: no debe ser 0' ].

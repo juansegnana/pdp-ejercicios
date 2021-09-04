@@ -1,5 +1,5 @@
 "
-ej. 10
+ej. 11
 Ingresar 2 polinomios y realizar la suma y el producto de ambos.
 Ejemplo: (2x^2+5x-1)+(4x^2-2x+1).
 
@@ -7,7 +7,7 @@ pedir a usuario que ingrese numero con X, sino será el nro indep. y finaliza.
 por lo tanto, el ult. elemento del array siempre será el independiente.
 grado más grande: array size - 1.
 "
-| pedir polN salir arrCopy indexTemp numTemp opTemp polA polB array suma sumaFun mulFun coefA coefB sumaActual sumaArray temp producto tempMulA tempMulB |
+| pedir polN salir arrCopy indexTemp numTemp opTemp polA polB polBOriginal array suma sumaFun mulFun coefA coefB sumaActual sumaArray temp producto tempMulA gradoMaxMult gradoMayorA gradoMayorB mostrar |
 
 pedir := [ :nombrePol | 
 	polN := OrderedCollection new.
@@ -36,6 +36,10 @@ pedir := [ :nombrePol |
 
 polA := pedir value: 'A'.
 polB := pedir value: 'B'.
+polBOriginal := polB.
+
+gradoMayorA := (polA size) - 1.
+gradoMayorB := (polB size) - 1.
 
 " verificar tamaño de arrays "
 (polA size > polB size) 
@@ -78,36 +82,59 @@ suma := sumaFun value: polA value:polB.
 
 " MULTIPLICACION DE POLINOMIOS "
 mulFun := [ :arrA :arrB |
-	tempMulA := Array new: (arrA size) withAll: 0.
-	tempMulB := Array new: (arrA size) withAll: 0.
-	indexTemp := (arrB size).
-	1 to: (arrB size) do: [ :i | 
-		arrB at: i.
-		indexTemp := indexTemp + 1.
+	
+	gradoMaxMult := (gradoMayorA + gradoMayorB) + 1. 
+	tempMulA := Array new: (gradoMaxMult) withAll: 0.
+		
+	1 to: (arrB size) do: [ :i |
+
+		indexTemp:= i.
+		"startAt:= startAt+1."
+		
+		1 to: (arrA size) do: [ :j |
+				
+				tempMulA at: indexTemp put: ( ((arrA at:j) * (arrB at: i)) + (tempMulA at: indexTemp) ).			
+				indexTemp := indexTemp + 1.
+		
+		].
+	
 	].
+	
+	tempMulA.
 ].
-producto := mulFun value: polA value: polB.
+producto := mulFun value: polA value: polBOriginal. "original sin posibles 0 de más"
 
 "Mostrar por pantalla resultados"
-Transcript clear.
-Transcript show: 'polA + polB es igual a:'; cr.
-temp := suma size - 1. "grado"
-1 to: suma size do: [ :i |
-	
-	(temp > 0)
-	ifTrue: [ 
-		Transcript show: ('{1}X^{2} + ' format: { 
-		suma at: i. 
-		temp. }).	
-	]
-	ifFalse: [ 
-		Transcript show: ('{1}' format: {   suma at: i. }).	
+mostrar := [ :arr |
+	temp := (arr size) - 1.
+	1 to: arr size do: [ :i |
+		(temp > 0)
+		ifTrue: [ 
+			Transcript show: ('{1}X^{2} + ' format: { 
+			arr at: i. 
+			temp. }).	
+		]
+		ifFalse: [ 
+			Transcript show: ('{1}' format: { arr at: i. }).	
+		].
+		temp := temp - 1.
 	].
-	
-	temp := temp - 1.
-	
 ].
+
+Transcript clear.
+
+Transcript show: 'polA:'; cr.
+mostrar value: polA.
 Transcript cr.
-Transcript show: ('Multiplicación: {1}' format: { producto }).
+
+Transcript show: 'polB:'; cr.
+mostrar value: polB.
 Transcript cr.
-Transcript show: ('{1} - {2}' format:{ polA. polB. }).
+
+"Mostrar suma"
+Transcript show: 'polA + polB es igual a:'; cr.
+mostrar value: suma.
+Transcript cr.
+"Mostrar producto"
+Transcript show: ('polA * polB es igual a:'); cr.
+mostrar value: producto.

@@ -2,6 +2,7 @@
 ej. 11
 Ingresar 2 polinomios y realizar la suma y el producto de ambos.
 Ejemplo: (2x^2+5x-1)+(4x^2-2x+1).
+Testeado: (8x^2+5x+2)*(7x+1)
 
 pedir a usuario que ingrese numero con X, sino será el nro indep. y finaliza.
 por lo tanto, el ult. elemento del array siempre será el independiente.
@@ -87,9 +88,8 @@ mulFun := [ :arrA :arrB |
 	tempMulA := Array new: (gradoMaxMult) withAll: 0.
 		
 	1 to: (arrB size) do: [ :i |
-
+		"Indica donde debe comenzar las operaciones en el nuevo arreglo"
 		indexTemp:= i.
-		"startAt:= startAt+1."
 		
 		1 to: (arrA size) do: [ :j |
 				

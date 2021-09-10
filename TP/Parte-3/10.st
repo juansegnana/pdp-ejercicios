@@ -1,8 +1,4 @@
 "
-TP-3-EJ-9
-A partir de una frase ingresada por el usuario contar la cantidad de palabras que empiezan con una determinada letra (también ingresada por el usuario).
-"
-"
 TP-3-EJ10
 Ídem anterior, pero contar la cantidad de palabras que terminan con una letra determinada.
 "
